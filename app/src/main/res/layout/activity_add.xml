@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
+    >
+
+    <!--    TOOLBAR-->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/app_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/ratingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="40dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/submit"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusableInTouchMode="true">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/tvRestaurant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="@id/middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="@id/middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRestaurant" />
+
+            <TextView
+                android:id="@+id/tvKnusper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="@id/middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                />
+
+            <TextView
+                android:id="@+id/tvSize"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="@id/middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvKnusper" />
+
+            <TextView
+                android:id="@+id/tvBeilagen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="@id/middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSize" />
+
+            <TextView
+                android:id="@+id/tvGeschmack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="@id/middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBeilagen" />
+
+            <TextView
+                android:id="@+id/tvPreis"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="@id/middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvGeschmack" />
+
+            <TextView
+                android:id="@+id/tvNotice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="@id/middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPreis" />
+
+
+            <EditText
+                android:id="@+id/etRestaurant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:fontFamily="@font/vollkorn"
+                app:layout_constraintBottom_toBottomOf="@id/tvRestaurant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                app:layout_constraintTop_toTopOf="@id/tvRestaurant" />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:fontFamily="@font/vollkorn"
+                app:layout_constraintBottom_toBottomOf="@id/tvName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                app:layout_constraintTop_toTopOf="@id/tvName" />
+
+            <RatingBar
+                android:id="@+id/etKnusper"
+                android:layout_width="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/tvKnusper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                android:numStars="5"
+                android:isIndicator="false"
+                app:layout_constraintTop_toTopOf="@id/tvKnusper"
+                tools:ignore="MissingClass" />
+
+            <RatingBar
+                android:id="@+id/etSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:numStars="5"
+                style="?android:attr/ratingBarStyleSmall"
+                android:isIndicator="false"
+                app:layout_constraintBottom_toBottomOf="@id/tvSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                app:layout_constraintTop_toTopOf="@id/tvSize" />
+
+            <RatingBar
+                android:id="@+id/etBeilagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:numStars="5"
+                android:isIndicator="false"
+                style="?android:attr/ratingBarStyleSmall"
+                app:layout_constraintBottom_toBottomOf="@id/tvBeilagen"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                app:layout_constraintTop_toTopOf="@id/tvBeilagen" />
+
+            <RatingBar
+                android:id="@+id/etGeschmack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:numStars="5"
+                android:isIndicator="false"
+                style="?android:attr/ratingBarStyleSmall"
+                app:layout_constraintBottom_toBottomOf="@id/tvGeschmack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                app:layout_constraintTop_toTopOf="@id/tvGeschmack" />
+
+            <RatingBar
+                android:id="@+id/etPreis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:numStars="5"
+                android:isIndicator="false"
+                style="?android:attr/ratingBarStyleSmall"
+                app:layout_constraintBottom_toBottomOf="@id/tvPreis"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                app:layout_constraintTop_toTopOf="@id/tvPreis" />
+
+            <EditText
+                android:id="@+id/etNotice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/vollkorn"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                app:layout_constraintBottom_toBottomOf="@id/tvNotice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                app:layout_constraintTop_toTopOf="@id/tvNotice" />
+
+            <Button
+                android:id="@+id/uploadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:fontFamily="@font/vollkorn"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etNotice"/>
+
+            <ImageView
+                android:id="@+id/foto"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etNotice"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/uploadButton"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/vollkorn_bold"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

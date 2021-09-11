@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">NatNat</string>
+    <string name="toolbarHeader">Best Nat in Town</string>
+    <string name="add">Add new Nat</string>
+    <string name="submit">Submit</string>
+    <string name="restaurant">Restaurant: </string>
+    <string name="meal">Gericht: </string>
+    <string name="knusper">Knusprig:</string>
+    <string name="size">Portionsgröße:</string>
+    <string name="beilagen">Beilagen: </string>
+    <string name="taste">Geschmack: </string>
+    <string name="preis">Preis:</string>
+    <string name="notice">Notizen: </string>
+    <string name="upload">Fotooo</string>
+    <string name="extended">Extended Information</string>
+    <string name="gesamt">Gesamt: </string>
+    <string name="edit">Edit</string>
+</resources>
