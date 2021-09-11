@@ -1,0 +1,14 @@
+create TABLE nat(
+    "restaurant" TEXT NOT NULL,
+    "meal" TEXT NOT NULL,
+    "notice" TEXT,
+    "knusper" TINYINT,
+    "size" TINYINT,
+    "beilagen" TINYINT,
+    "geschmack" TINYINT,
+    "preis" TINYINT,
+    "imagePath" TEXT
+    );
+
+.mode csv
+
