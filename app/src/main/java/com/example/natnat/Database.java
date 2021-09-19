@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.apache.commons.io.IOUtil;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +23,7 @@ import java.util.ArrayList;
 public class Database {
 
     private static final String DATABASE_NAME = "nat.db";
+    private static final String NAT_TABLE = "nat";
     private static SQLiteDatabase db = null;
     private final Activity activity;
     String targetPath;
@@ -56,11 +61,10 @@ public class Database {
         }
     }
 
-    public void addNatEntry(NatItem nat) {
+    public long addNatEntry(NatItem nat) {
         if (nat.restaurantName == null) {
             throw new IllegalArgumentException("restaurantname must be set");
         }
-
 
         ContentValues values = new ContentValues();
         values.put("restaurant", nat.restaurantName);
@@ -73,14 +77,15 @@ public class Database {
         values.put("preis", nat.preis);
         values.put("imagePath", nat.imagePath);
 
-        db.insert("nat", null, values);
+        return db.insert(NAT_TABLE, null, values);
     }
+
 
     public ArrayList<NatItem> getNatEntries() {
         ArrayList<NatItem> natItems = new ArrayList<>();
         String[] columns = {"restaurant", "meal", "notice", "knusper", "size", "beilagen", "geschmack", "preis", "imagePath"};
 
-        Cursor c = db.query("nat", columns, null, null, null, null, null);
+        Cursor c = db.query(NAT_TABLE, columns, null, null, null, null, null);
         if (!c.moveToFirst()) {
             natItems.add(new NatItem("none", "none", "none", 0f, 0f, 0f, 0f, 0f, null));
             return natItems;
@@ -107,15 +112,15 @@ public class Database {
 
     public void editEntry(NatItem editNat, ContentValues contentValues) {
         String[] whereArgs = {editNat.meal, editNat.restaurantName};
-        db.update("nat", contentValues, "meal = ? AND restaurant = ?", whereArgs);
+        db.update(NAT_TABLE, contentValues, "meal = ? AND restaurant = ?", whereArgs);
     }
 
     public boolean removeNatEntry(NatItem kickNat) {
         String[] whereArgs = {kickNat.meal, kickNat.restaurantName};
         String[] columns = {"meal", "restaurant"};
-        Cursor c = db.query("nat", columns, "meal = ? AND restaurant = ?", whereArgs, null, null, null);
+        Cursor c = db.query(NAT_TABLE, columns, "meal = ? AND restaurant = ?", whereArgs, null, null, null);
         if (c.moveToNext()) {
-            db.delete("nat", "meal = ? AND restaurant = ?", whereArgs);
+            db.delete(NAT_TABLE, "meal = ? AND restaurant = ?", whereArgs);
             return true;
         }
         c.close();
@@ -127,7 +132,7 @@ public class Database {
         String[] columns = {"restaurant", "meal", "notice", "knusper", "size", "beilagen", "geschmack", "preis", "imagePath"};
         String[] whereArgs = {meale, restaurante};
 
-        Cursor c = db.query("nat", columns, "meal = ? AND restaurant = ?", whereArgs, null, null, null);
+        Cursor c = db.query(NAT_TABLE, columns, "meal = ? AND restaurant = ?", whereArgs, null, null, null);
         if (c.moveToFirst()) {
             String restaurant = c.getString(0);
             String meal = c.getString(1);
@@ -142,6 +147,63 @@ public class Database {
         } else natItem = new NatItem("none", "none", "none", 0f, 0f, 0f, 0f, 0f, null);
         c.close();
         return natItem;
+    }
+
+    public JSONObject exportDatabase() throws JSONException {
+        JSONObject outJson = new JSONObject();
+
+
+        JSONArray jsonNatEntries = new JSONArray();
+        ArrayList<NatItem> natEntries = getNatEntries();
+
+        if (natEntries != null) {
+            for (NatItem nat : natEntries) {
+                if (nat.restaurantName.equals("none") && nat.meal.equals("none")) return null;
+
+                JSONObject natEntry = new JSONObject();
+                if (nat == null) {
+                    continue;
+                }
+                natEntry.put("nat", nat.toJsonObject());
+                jsonNatEntries.put(natEntry);
+            }
+        }
+        outJson.put("natEntries", jsonNatEntries);
+
+        return outJson;
+    }
+
+    public void importDatabase(JSONObject inJson, boolean replaceExisting) throws JSONException {
+        JSONArray natEntries = null;
+
+        try {
+            natEntries = inJson.getJSONArray("natEntries");
+        } catch (JSONException e) {
+            Log.wtf("INFO", "No NatEntries to import");
+        }
+
+        if (natEntries != null) {
+            for (int i = 0; i < natEntries.length(); i++) {
+
+                JSONObject jsonNatItem = natEntries.getJSONObject(i).getJSONObject("nat");
+
+                ContentValues values = new ContentValues();
+                values.put("restaurant", jsonNatItem.getString("restaurant"));
+                values.put("meal", jsonNatItem.getString("meal"));
+                values.put("notice", jsonNatItem.getString("notice"));
+                values.put("knusper", Float.parseFloat(jsonNatItem.getString("knusper")));
+                values.put("size", Float.parseFloat(jsonNatItem.getString("size")));
+                values.put("beilagen", Float.parseFloat(jsonNatItem.getString("beilagen")));
+                values.put("geschmack", Float.parseFloat(jsonNatItem.getString("taste")));
+                values.put("preis", Float.parseFloat(jsonNatItem.getString("preis")));
+                //values.put("imagePath", null);
+
+                if (replaceExisting) {
+                    db.replace(NAT_TABLE, null, values);
+                } else db.insert(NAT_TABLE, null, values);
+
+            }
+        }
     }
 }
 
