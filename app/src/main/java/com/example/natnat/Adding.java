@@ -1,6 +1,7 @@
 package com.example.natnat;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -219,9 +220,14 @@ public class Adding extends AppCompatActivity {
                 }
             }
             newNat = new NatItem(restaurant, meal, notice, knusper, size, beilagen, taste, preis, imgPath);
-            db.addNatEntry(newNat);
-            Toast toast = Toast.makeText(Adding.this, "successfully added new NatEntry", Toast.LENGTH_LONG);
-            toast.show();
+            if (db.addNatEntry(newNat) == -1) {
+                Toast alreadyExists = Toast.makeText(Adding.this, "A Nat like this already exists in the Database. ADDING FAILED!", Toast.LENGTH_LONG);
+                alreadyExists.show();
+            } else {
+                Toast successfullyAdded = Toast.makeText(Adding.this, "successfully added new NatEntry", Toast.LENGTH_LONG);
+                successfullyAdded.show();
+
+            }
             finish();
         } catch (IllegalArgumentException e) {
             Toast toast = Toast.makeText(getApplicationContext(), "Restaurant and meal field must not be empty!", Toast.LENGTH_LONG);
