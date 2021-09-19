@@ -1,4 +1,4 @@
-create TABLE nat(
+create TABLE nat (
     "restaurant" TEXT NOT NULL,
     "meal" TEXT NOT NULL,
     "notice" TEXT,
@@ -7,8 +7,8 @@ create TABLE nat(
     "beilagen" TINYINT,
     "geschmack" TINYINT,
     "preis" TINYINT,
-    "imagePath" TEXT
+    "imagePath" TEXT,
+     PRIMARY KEY ("restaurant", "meal")
     );
 
 .mode csv
-
